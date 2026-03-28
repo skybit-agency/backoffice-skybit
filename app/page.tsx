@@ -8,6 +8,7 @@ export default function Home() {
         rechanging ci/cd configuration
         retsting ci/cd configuration after paton
         purpose make the test fail to check status of ci/cd pipeline and protect branch rules
+        retesting ci/cd configuration after adding status
         in>
     </div>
   );
