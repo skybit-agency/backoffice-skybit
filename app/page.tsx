@@ -6,7 +6,8 @@ export default function Home() {
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         testing ci/cd configuration
         final test after adding PR
-        in>
+        blocked admin bypass
+        </main>
     </div>
   );
 }
