@@ -6,8 +6,9 @@ export default function Home() {
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         testing ci/cd configuration
         rechanging ci/cd configuration
-        retsting ci/cd configuration after path fix 3
-      </main>
+        retsting ci/cd configuration after paton
+        purpose make the test fail to check status of ci/cd pipeline and protect branch rules
+        in>
     </div>
   );
 }
