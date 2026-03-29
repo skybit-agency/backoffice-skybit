@@ -27,35 +27,35 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: (
         <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />
       ),
     },
     {
       title: "Services",
-      url: "#",
+      url: "/services",
       icon: (
         <HugeiconsIcon icon={Menu01Icon} strokeWidth={2} />
       ),
     },
     {
       title: "Form",
-      url: "#",
+      url: "/form",
       icon: (
         <HugeiconsIcon icon={File01Icon} strokeWidth={2} />
       ),
     },
     {
       title: "Clients",
-      url: "#",
+      url: "/clients",
       icon: (
         <HugeiconsIcon icon={Profile02Icon} strokeWidth={2} />
       ),
     },
     {
       title: "Our Team",
-      url: "#",
+      url: "/team",
       icon: (
         <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />
       ),
@@ -64,21 +64,21 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: (
         <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />
       ),
     },
     {
       title: "Get Help",
-      url: "#",
+      url: "/help",
       icon: (
         <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />
       ),
     },
     {
       title: "Search",
-      url: "#",
+      url: "/search",
       icon: (
         <HugeiconsIcon icon={SearchIcon} strokeWidth={2} />
       ),
@@ -93,7 +93,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               className="data-[slot=sidebar-menu-button]:p-1.5!"
-              render={<a href="#" />}
+              render={<a href="/" />}
             >
               <HugeiconsIcon icon={CommandIcon} strokeWidth={2} className="size-5!" />
               <span className="text-base font-semibold">SkyBit Agency.</span>

@@ -1,11 +1,11 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/site-header";
-import { FormSubmissionsTable } from "@/components/form-submissions-table";
+import { SettingsForm } from "@/components/settings-form";
 
 import data from "./data.json";
 
-export default function FormPage() {
+export default function SettingsPage() {
   return (
     <SidebarProvider
       style={
@@ -21,18 +21,13 @@ export default function FormPage() {
         <SiteHeader />
         <div className="flex flex-1 flex-col">
           <div className="flex flex-col gap-4 p-4 md:p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-lg font-bold">Contact Submissions</h2>
-                <p className="text-sm text-muted-foreground">
-                  View and manage contact form submissions from clients.
-                </p>
-              </div>
-              <span className="rounded-lg bg-muted px-3 py-1 text-sm font-medium text-muted-foreground">
-                {data.length} submissions
-              </span>
+            <div>
+              <h2 className="text-lg font-bold">Settings</h2>
+              <p className="text-sm text-muted-foreground">
+                Manage social media links and website metadata.
+              </p>
             </div>
-            <FormSubmissionsTable initialData={data} />
+            <SettingsForm initialData={data} />
           </div>
         </div>
       </SidebarInset>

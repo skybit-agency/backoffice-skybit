@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "name": "João Silva",
+    "email": "joao.silva@email.com",
+    "phone": "+351 912 345 678",
+    "message": "Gostaria de saber mais sobre os vossos serviços de marketing digital para a minha empresa.",
+    "submittedAt": "2026-03-25T10:30:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Maria Santos",
+    "email": "maria.santos@empresa.pt",
+    "phone": "+351 923 456 789",
+    "message": "Preciso de um orçamento para o desenvolvimento de uma aplicação móvel.",
+    "submittedAt": "2026-03-24T14:15:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Carlos Oliveira",
+    "email": "carlos@startup.io",
+    "phone": "+351 934 567 890",
+    "message": "Estamos à procura de uma empresa para redesenhar o nosso website corporativo. Podem ajudar?",
+    "submittedAt": "2026-03-23T09:45:00Z"
+  },
+  {
+    "id": "4",
+    "name": "Ana Costa",
+    "email": "ana.costa@gmail.com",
+    "phone": "+351 945 678 901",
+    "message": "Gostaria de agendar uma reunião para discutir consultoria em segurança cibernética.",
+    "submittedAt": "2026-03-22T16:00:00Z"
+  },
+  {
+    "id": "5",
+    "name": "Pedro Ferreira",
+    "email": "pedro.f@negocio.pt",
+    "phone": "+351 956 789 012",
+    "message": "Preciso de suporte técnico urgente para os nossos servidores.",
+    "submittedAt": "2026-03-21T11:20:00Z"
+  }
+]

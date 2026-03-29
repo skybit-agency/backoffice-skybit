@@ -1,0 +1,37 @@
+{
+  "socialLinks": [
+    {
+      "id": "1",
+      "platform": "Facebook",
+      "url": "https://facebook.com/skybitagency",
+      "iconName": "facebook"
+    },
+    {
+      "id": "2",
+      "platform": "Instagram",
+      "url": "https://instagram.com/skybitagency",
+      "iconName": "instagram"
+    },
+    {
+      "id": "3",
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/company/skybitagency",
+      "iconName": "linkedin"
+    },
+    {
+      "id": "4",
+      "platform": "X (Twitter)",
+      "url": "https://x.com/skybitagency",
+      "iconName": "twitter"
+    }
+  ],
+  "metadata": {
+    "receivingEmail": "contact@skybit.pt",
+    "logoUrl": "/logo.png",
+    "section3dTitle": "Innovative Digital Solutions",
+    "section3dDescription": "We craft cutting-edge digital experiences using the latest technologies in 3D visualization and web development.",
+    "section3dSubtext": "Explore our interactive showcase",
+    "scene3dFiles": ["scene.gltf", "scene.bin", "texture_diffuse.png", "texture_normal.png"],
+    "missionText": "A nossa missão é transformar ideias em soluções digitais inovadoras que impulsionam o crescimento dos nossos clientes. Combinamos criatividade, tecnologia e estratégia para entregar resultados excepcionais."
+  }
+}
