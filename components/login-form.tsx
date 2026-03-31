@@ -11,8 +11,10 @@ import { Input } from "@/components/ui/input"
 
 export function LoginForm({
   className,
+  isLoading,
+  error,
   ...props
-}: React.ComponentProps<"form">) {
+}: React.ComponentProps<"form"> & { isLoading?: boolean; error?: string }) {
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <FieldGroup>
@@ -24,7 +26,7 @@ export function LoginForm({
         </div>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input id="email" name="email" type="email" placeholder="m@example.com" required disabled={isLoading} />
         </Field>
         <Field>
           <div className="flex items-center">
@@ -36,12 +38,16 @@ export function LoginForm({
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input id="password" name="password" type="password" required disabled={isLoading} />
         </Field>
+        {error && (
+          <p className="text-sm text-red-500 text-center font-medium">{error}</p>
+        )}
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
+          </Button>
         </Field>
-        
       </FieldGroup>
     </form>
   )

@@ -1,18 +1,50 @@
 "use client"
 import { GalleryVerticalEnd } from "lucide-react"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 import { LoginForm } from "@/components/login-form"
 import { ThemeToggle } from "@/components/ThemeToggle"
 
 export default function LoginPage() {
-  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setIsLoading(true);
+    setError(undefined);
     
-    const email = event.currentTarget.email.value;
-    const password = event.currentTarget.password.value;
-    console.log("Email:", email);
-    console.log("Password:", password);
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await response.json();
+      
+      if (data.errorNumber === 0) {
+         toast.success("Login Successful");
+         // User is authenticated, redirect to robust admin dashboard
+         router.push('/dashboard');
+      } else {
+         setError(data.message || "Invalid credentials");
+         toast.error(data.message || "Invalid credentials");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred while logging in.");
+      toast.error("Network or server error.");
+    } finally {
+      setIsLoading(false);
+    }
   }
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -29,7 +61,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <LoginForm onSubmit={handleSubmit} />
+            <LoginForm onSubmit={handleSubmit} isLoading={isLoading} error={error} />
           </div>
         </div>
       </div>
