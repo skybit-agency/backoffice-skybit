@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "name": "TechNova Solutions",
+    "company": "TechNova Lda.",
+    "email": "contact@technova.pt",
+    "phone": "+351 912 100 200",
+    "imageUrl": "/clients/technova.jpg",
+    "projectCount": 3
+  },
+  {
+    "id": "2",
+    "name": "GreenPath Eco",
+    "company": "GreenPath S.A.",
+    "email": "info@greenpath.pt",
+    "phone": "+351 923 200 300",
+    "imageUrl": "/clients/greenpath.jpg",
+    "projectCount": 1
+  },
+  {
+    "id": "3",
+    "name": "UrbanBite",
+    "company": "UrbanBite Restauração",
+    "email": "hello@urbanbite.pt",
+    "phone": "+351 934 300 400",
+    "imageUrl": "/clients/urbanbite.jpg",
+    "projectCount": 2
+  },
+  {
+    "id": "4",
+    "name": "FitZone Gym",
+    "company": "FitZone Desporto Lda.",
+    "email": "admin@fitzone.pt",
+    "phone": "+351 945 400 500",
+    "imageUrl": "/clients/fitzone.jpg",
+    "projectCount": 1
+  },
+  {
+    "id": "5",
+    "name": "Oceano Travel",
+    "company": "Oceano Viagens S.A.",
+    "email": "reservas@oceanotravel.pt",
+    "phone": "+351 956 500 600",
+    "imageUrl": "/clients/oceano.jpg",
+    "projectCount": 4
+  }
+]

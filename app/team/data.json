@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "name": "Ricardo Mendes",
+    "role": "CEO & Founder",
+    "email": "ricardo@skybit.pt",
+    "phone": "+351 912 111 222",
+    "imageUrl": "/team/ricardo.jpg",
+    "bio": "Fundador da SkyBit Agency com mais de 15 anos de experiência em tecnologia e gestão empresarial."
+  },
+  {
+    "id": "2",
+    "name": "Sofia Almeida",
+    "role": "CTO",
+    "email": "sofia@skybit.pt",
+    "phone": "+351 923 222 333",
+    "imageUrl": "/team/sofia.jpg",
+    "bio": "Especialista em arquitetura de software e liderança técnica, com formação em engenharia informática."
+  },
+  {
+    "id": "3",
+    "name": "Miguel Torres",
+    "role": "Lead Designer",
+    "email": "miguel@skybit.pt",
+    "phone": "+351 934 333 444",
+    "imageUrl": "/team/miguel.jpg",
+    "bio": "Designer criativo com foco em UX/UI e branding. Responsável pela identidade visual da empresa."
+  },
+  {
+    "id": "4",
+    "name": "Beatriz Lima",
+    "role": "Marketing Manager",
+    "email": "beatriz@skybit.pt",
+    "phone": "+351 945 444 555",
+    "imageUrl": "/team/beatriz.jpg",
+    "bio": "Gestora de marketing digital com experiência em SEO, SEM e estratégias de crescimento."
+  },
+  {
+    "id": "5",
+    "name": "André Rodrigues",
+    "role": "Full-Stack Developer",
+    "email": "andre@skybit.pt",
+    "phone": "+351 956 555 666",
+    "imageUrl": "/team/andre.jpg",
+    "bio": "Desenvolvedor full-stack com competências em React, Node.js e cloud computing."
+  }
+]
