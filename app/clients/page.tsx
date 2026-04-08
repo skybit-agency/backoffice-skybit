@@ -68,8 +68,10 @@ export default async function ClientsPage({
                       <Image
                         src={client.imageUrl || client.ImageUrl}
                         alt={client.name}
-                        className="aspect-[3/2] w-full rounded-t-lg object-cover brightness-90 dark:brightness-60"
+                        fill
+                        className="rounded-t-lg object-cover brightness-90 dark:brightness-60"
                       />
+                      <div className="aspect-[3/2] w-full" />
                       <div className="absolute inset-0 rounded-t-lg bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                       <Badge
                         variant="secondary"

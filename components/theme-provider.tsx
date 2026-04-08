@@ -45,6 +45,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return t === "system" ? getSystemTheme() : (t === "dark" ? "dark" : "light");
   });
 
+  // Apply theme on mount
+  useEffect(() => {
+    const root = document.documentElement;
+    const isDark = resolvedTheme === "dark";
+    root.classList.toggle("dark", isDark);
+  }, [resolvedTheme]);
+
   // Effect is now only for external synchronization and event listeners
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");

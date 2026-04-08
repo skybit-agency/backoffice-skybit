@@ -139,26 +139,26 @@ export function ClientEditForm({
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <Field>
                 <FieldLabel htmlFor="name">Client Name</FieldLabel>
-                <Input id="name" name="name" value={formData.name} onChange={handleChange} />
+                <Input id="name" name="name" value={formData.name ?? ""} onChange={handleChange} />
               </Field>
               <Field>
                 <FieldLabel htmlFor="company">Company</FieldLabel>
-                <Input id="company" name="company" value={formData.company} onChange={handleChange} />
+                <Input id="company" name="company" value={formData.company ?? ""} onChange={handleChange} />
               </Field>
             </div>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} />
+                <Input id="email" name="email" type="email" value={formData.email ?? ""} onChange={handleChange} />
               </Field>
               <Field>
                 <FieldLabel htmlFor="phone">Phone</FieldLabel>
-                <Input id="phone" name="phone" value={formData.phone} onChange={handleChange} />
+                <Input id="phone" name="phone" value={formData.phone ?? ""} onChange={handleChange} />
               </Field>
             </div>
             <Field>
               <FieldLabel htmlFor="projectCount">Project Count</FieldLabel>
-              <Input id="projectCount" name="projectCount" type="number" min={0} value={formData.projectCount} onChange={handleChange} />
+              <Input id="projectCount" name="projectCount" type="number" min={0} value={formData.projectCount ?? 0} onChange={handleChange} />
             </Field>
 
             <Field>
@@ -173,7 +173,7 @@ export function ClientEditForm({
               </div>
               {imageMode === "url" ? (
                 <div className="mt-2">
-                  <Input id="imageUrl" name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="/clients/logo.jpg" />
+                  <Input id="imageUrl" name="imageUrl" value={formData.imageUrl ?? ""} onChange={handleChange} placeholder="/clients/logo.jpg" />
                   <FieldDesc>Enter a URL or path to the client image.</FieldDesc>
                 </div>
               ) : (
