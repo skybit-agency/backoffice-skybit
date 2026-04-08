@@ -14,6 +14,7 @@ import { Database } from "@/config/db";
 import { DeleteButton } from "@/components/ui/delete-button";
 import { getSessionUser } from "@/lib/session";
 import { ControlMenu } from "@/components/control-menu";
+import Image from "next/image";
 
 export default async function TeamPage({
   searchParams,
@@ -63,11 +64,13 @@ export default async function TeamPage({
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {teamMembers.map((member) => (
                   <Card key={member._id.toString()} className="flex flex-col">
-                    <div className="relative">
-                      <img
+                    <div className="relative aspect-[3/2] w-full">
+                      <Image
                         src={member.imageUrl || member.ImageUrl}
                         alt={member.name}
-                        className="aspect-[3/2] w-full rounded-t-lg object-cover brightness-90 dark:brightness-60"
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="rounded-t-lg object-cover brightness-90 dark:brightness-60"
                       />
                       <div className="absolute inset-0 rounded-t-lg bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                       <Badge

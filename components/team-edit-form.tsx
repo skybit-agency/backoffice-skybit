@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import type { TeamMember } from "@/app/Types";
+import Image from "next/image";
 
 type ImageMode = "url" | "upload";
 
@@ -111,11 +112,14 @@ export function TeamEditForm({
   return (
     <div className="mx-auto w-full max-w-3xl space-y-6">
       <Card className="overflow-hidden p-0">
-        <div className="relative">
-          <img
+        <div className="relative aspect-[3/2] w-full">
+          <Image
             src={previewUrl}
             alt={formData.name}
-            className="aspect-[3/2] w-full object-cover brightness-90 dark:brightness-60"
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover brightness-90 dark:brightness-60"
+            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-4 left-4 right-4">

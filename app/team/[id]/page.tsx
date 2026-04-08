@@ -14,6 +14,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
+interface TeamMember {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  bio: string;
+  imageUrl: string;
+  socials: {
+    twitter: string;
+    linkedin: string;
+    github: string;
+  };
+}
 export default async function TeamEditPage({
   params,
 }: {
@@ -84,7 +98,7 @@ export default async function TeamEditPage({
             </Breadcrumb>
 
             {member ? (
-              <TeamEditForm member={member as any} isNew={isNew} />
+              <TeamEditForm member={member as TeamMember} isNew={isNew} />
             ) : (
               <div className="flex flex-1 items-center justify-center py-20">
                 <div className="text-center">

@@ -13,7 +13,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  ImageUrl: string;
+  linkto: string;
+}
 export default async function ServiceEditPage({
   params,
 }: {
@@ -85,7 +91,7 @@ export default async function ServiceEditPage({
 
             {/* Content */}
             {service ? (
-              <ServiceEditForm service={service as any} isNew={isNew} />
+              <ServiceEditForm service={service as Service} isNew={isNew} />
             ) : (
               <div className="flex flex-1 items-center justify-center py-20">
                 <div className="text-center">

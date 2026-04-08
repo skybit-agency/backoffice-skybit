@@ -13,7 +13,16 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
+interface Client {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  projectCount: number;
+  imageUrl: string;
+}
+  
 export default async function ClientEditPage({
   params,
 }: {
@@ -83,7 +92,7 @@ export default async function ClientEditPage({
             </Breadcrumb>
 
             {client ? (
-              <ClientEditForm client={client as any} isNew={isNew} />
+              <ClientEditForm client={client as Client} isNew={isNew} />
             ) : (
               <div className="flex flex-1 items-center justify-center py-20">
                 <div className="text-center">

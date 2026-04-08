@@ -20,6 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import type { SocialLink, WebsiteMetadata } from "@/app/Types";
+import Image from "next/image";
 
 interface SettingsData {
   socialLinks: SocialLink[];
@@ -264,11 +265,14 @@ export function SettingsForm({ initialData }: { initialData: SettingsData }) {
               <FieldLabel>Logo</FieldLabel>
               <div className="flex items-center gap-4">
                 {logoPreview && (
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-input bg-muted/50 p-2">
-                    <img
+                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-input bg-muted/50 p-2">
+                    <Image
                       src={logoPreview}
                       alt="Logo preview"
-                      className="max-h-full max-w-full object-contain"
+                      width={64}
+                      height={64}
+                      className="object-contain"
+                      unoptimized
                     />
                   </div>
                 )}
