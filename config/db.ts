@@ -3,11 +3,10 @@ import { MongoClient } from 'mongodb';
 // Using the full replica set connection string for Atlas
 const uri = process.env.CONNECTION_STRING || "mongodb://localhost:27017";
 
-// Create a MongoClient with directConnection to bypass Windows replica set discovery bug
+// Remove directConnection: true to allow Atlas to find the primary node
 const client = new MongoClient(uri, {
   tls: true,
-  directConnection: true,
-  retryWrites: false,
+  retryWrites: true,
   serverSelectionTimeoutMS: 10000,
 });
 

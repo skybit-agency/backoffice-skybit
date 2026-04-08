@@ -17,7 +17,13 @@ import type { Client } from "@/app/Types";
 
 type ImageMode = "url" | "upload";
 
-export function ClientEditForm({ client }: { client: Client }) {
+export function ClientEditForm({ 
+  client, 
+  isNew = false 
+}: { 
+  client: Client; 
+  isNew?: boolean;
+}) {
   const router = useRouter();
   const [formData, setFormData] = useState<Client>({ ...client });
   const [isSaving, setIsSaving] = useState(false);
@@ -78,16 +84,16 @@ export function ClientEditForm({ client }: { client: Client }) {
         finalData.imageUrl = data.secure_url;
       }
 
-      toast.info("Saving client details...");
+      toast.info(isNew ? "Creating client..." : "Saving client details...");
       const res = await fetch("/api/clients", {
-        method: "PUT",
+        method: isNew ? "POST" : "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(finalData),
       });
 
       if (!res.ok) throw new Error("Failed to save client");
 
-      toast.success("Client saved successfully!");
+      toast.success(isNew ? "Client created successfully!" : "Client saved successfully!");
       router.push("/clients");
       router.refresh();
 
@@ -115,7 +121,7 @@ export function ClientEditForm({ client }: { client: Client }) {
               {formData.projectCount} project{formData.projectCount !== 1 ? "s" : ""}
             </Badge>
             <h2 className="text-xl font-bold text-white drop-shadow-md">
-              {formData.name}
+              {formData.name || (isNew ? "New Client" : "")}
             </h2>
           </div>
         </div>
@@ -123,9 +129,9 @@ export function ClientEditForm({ client }: { client: Client }) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Edit Client</CardTitle>
+          <CardTitle>{isNew ? "Add New Client" : "Edit Client"}</CardTitle>
           <CardDescription>
-            Modify client details below.
+            {isNew ? "Create a new client profile." : "Modify client details below."}
           </CardDescription>
         </CardHeader>
         <div className="px-6 pb-6">

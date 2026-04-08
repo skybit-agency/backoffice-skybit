@@ -18,7 +18,13 @@ import type { TeamMember } from "@/app/Types";
 
 type ImageMode = "url" | "upload";
 
-export function TeamEditForm({ member }: { member: TeamMember }) {
+export function TeamEditForm({ 
+  member, 
+  isNew = false 
+}: { 
+  member: TeamMember; 
+  isNew?: boolean;
+}) {
   const router = useRouter();
   const [formData, setFormData] = useState<TeamMember>({ ...member });
   const [isSaving, setIsSaving] = useState(false);
@@ -69,7 +75,7 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
 
     try {
       if (imageMode === "upload" && file) {
-        toast.info("Uploading profile image tracking. to Cloudinary...");
+        toast.info("Uploading profile image to Cloudinary...");
         const uploadData = new FormData();
         uploadData.append("file", file);
 
@@ -80,16 +86,16 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
         finalData.imageUrl = data.secure_url;
       }
 
-      toast.info("Saving team member details...");
+      toast.info(isNew ? "Adding team member..." : "Saving team member details...");
       const res = await fetch("/api/team", {
-        method: "PUT",
+        method: isNew ? "POST" : "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(finalData),
       });
 
       if (!res.ok) throw new Error("Failed to save team member");
 
-      toast.success("Team member saved successfully!");
+      toast.success(isNew ? "Team member added successfully!" : "Team member saved successfully!");
       router.push("/team");
       router.refresh();
 
@@ -114,10 +120,10 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-4 left-4 right-4">
             <Badge variant="secondary" className="mb-2">
-              {formData.role}
+              {formData.role || (isNew ? "New Role" : "")}
             </Badge>
             <h2 className="text-xl font-bold text-white drop-shadow-md">
-              {formData.name}
+              {formData.name || (isNew ? "New Member" : "")}
             </h2>
           </div>
         </div>
@@ -125,9 +131,9 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Edit Team Member</CardTitle>
+          <CardTitle>{isNew ? "Add Team Member" : "Edit Team Member"}</CardTitle>
           <CardDescription>
-            Modify the team member details below.
+            {isNew ? "Create a new team member profile." : "Modify the team member details below."}
           </CardDescription>
         </CardHeader>
         <div className="px-6 pb-6">
@@ -187,7 +193,7 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
 
           <div className="mt-6 flex items-center gap-3">
             <Button onClick={handleSave} disabled={isSaving}>
-              {isSaving ? "Saving…" : "Save Changes"}
+              {isSaving ? "Saving…" : (isNew ? "Create Member" : "Save Changes")}
             </Button>
             <Button variant="ghost" onClick={() => router.push("/team")}>
               Cancel
