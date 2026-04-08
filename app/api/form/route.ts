@@ -52,3 +52,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'Failed to submit form' }, { status: 500 });
   }
 }
+
+// Admin deletes a form
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ message: 'Missing form ID' }, { status: 400 });
+    }
+
+    const { ObjectId } = require('mongodb');
+    const db = Database.getInstance().getClient();
+    await db.connect();
+    const collection = db.db('skybit').collection('forms');
+
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ message: 'Form not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: 'Form deleted successfully' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Failed to delete form' }, { status: 500 });
+  }
+}

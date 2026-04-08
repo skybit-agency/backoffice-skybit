@@ -71,21 +71,23 @@ const data = {
     },
     {
       title: "Get Help",
-      url: "/help",
+      url: "mailto:wail.saribey@gmail.com",
       icon: (
         <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />
       ),
     },
-    {
-      title: "Search",
-      url: "/search",
-      icon: (
-        <HugeiconsIcon icon={SearchIcon} strokeWidth={2} />
-      ),
-    },
   ],
 }
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  user?: {
+    name: string;
+    email: string;
+    avatar: string;
+  } | null;
+}
+
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -106,7 +108,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user || data.user} />
       </SidebarFooter>
     </Sidebar>
   )

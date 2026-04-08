@@ -12,6 +12,7 @@ import {
   FieldDescription as FieldDesc,
 } from "@/components/ui/field";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 import type { Client } from "@/app/Types";
 
 type ImageMode = "url" | "upload";
@@ -25,6 +26,8 @@ export function ClientEditForm({ client }: { client: Client }) {
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [file, setFile] = useState<File | null>(null);
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
@@ -35,10 +38,11 @@ export function ClientEditForm({ client }: { client: Client }) {
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      const objectUrl = URL.createObjectURL(file);
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+      const objectUrl = URL.createObjectURL(selectedFile);
       setPreviewUrl(objectUrl);
       setFormData((prev) => ({ ...prev, imageUrl: objectUrl }));
     }
@@ -53,15 +57,46 @@ export function ClientEditForm({ client }: { client: Client }) {
         imageUrl: prev.imageUrl.startsWith("blob:") ? client.imageUrl : prev.imageUrl,
       }));
       setFileName("");
+      setFile(null);
     }
   }
 
-  function handleSave() {
+  async function handleSave() {
     setIsSaving(true);
-    setTimeout(() => {
-      alert(`Client "${formData.name}" saved successfully!`);
+    const finalData = { ...formData };
+
+    try {
+      if (imageMode === "upload" && file) {
+        toast.info("Uploading client logo to Cloudinary...");
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        const res = await fetch("/api/upload", { method: "POST", body: uploadData });
+        if (!res.ok) throw new Error("Failed to upload image");
+
+        const data = await res.json();
+        finalData.imageUrl = data.secure_url;
+      }
+
+      toast.info("Saving client details...");
+      const res = await fetch("/api/clients", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalData),
+      });
+
+      if (!res.ok) throw new Error("Failed to save client");
+
+      toast.success("Client saved successfully!");
+      router.push("/clients");
+      router.refresh();
+
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message || "An error occurred while saving.");
+    } finally {
       setIsSaving(false);
-    }, 600);
+    }
   }
 
   return (

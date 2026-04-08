@@ -1,11 +1,16 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarHeader, SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ServiceInterface } from "../Types";
 import { CardImage } from "@/components/ui/CardImage";
+import { Database } from "@/config/db";
+import { getSessionUser } from "@/lib/session";
 
-import data from "./data.json"
+export default async function ServicesPage() {
+  const user = await getSessionUser();
+  const db = Database.getInstance().getClient();
+  await db.connect();
+  const collection = db.db('skybit').collection('services');
+  const services = await collection.find({}).toArray();
 
-export default function ServicesPage() {
   return (
     <SidebarProvider
       style={
@@ -15,7 +20,7 @@ export default function ServicesPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset" user={user} />
 
       <SidebarInset>
         <SidebarHeader/>
@@ -23,22 +28,20 @@ export default function ServicesPage() {
         <div className="p-4">
             <h2 className="text-lg font-bold mb-4">Services</h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {data.map((service) => (
+                {services.map((service) => (
                     <CardImage
-                        key={service.id}
-                        id={service.id}
+                        key={service._id.toString()}
+                        id={service._id.toString()}
                         title={service.title}
                         description={service.description}
-                        imageUrl={service.ImageUrl}
-                        linkTo={service.linkto}
-
-                        badgeText={service.id === "3" ? "Featured" : undefined}
+                        imageUrl={service.ImageUrl || service.imageUrl}
+                        linkTo={`/services/${service._id.toString()}`}
+                        badgeText={service.featured ? "Featured" : undefined}
                     />
                 ))}
             </ul>
         </div>
       </SidebarInset>
-
     </SidebarProvider>
   );
 }

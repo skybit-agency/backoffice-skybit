@@ -11,10 +11,17 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { Database } from "@/config/db";
+import { DeleteButton } from "@/components/ui/delete-button";
+import { getSessionUser } from "@/lib/session";
 
-import data from "./data.json";
+export default async function TeamPage() {
+  const user = await getSessionUser();
+  const db = Database.getInstance().getClient();
+  await db.connect();
+  const collection = db.db('skybit').collection('team');
+  const teamMembers = await collection.find({}).toArray();
 
-export default function TeamPage() {
   return (
     <SidebarProvider
       style={
@@ -24,7 +31,7 @@ export default function TeamPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset" user={user} />
 
       <SidebarInset>
         <SiteHeader />
@@ -39,11 +46,11 @@ export default function TeamPage() {
               </div>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {data.map((member) => (
-                <Card key={member.id} className="flex flex-col">
+              {teamMembers.map((member) => (
+                <Card key={member._id.toString()} className="flex flex-col">
                   <div className="relative">
                     <img
-                      src={member.imageUrl}
+                      src={member.imageUrl || member.ImageUrl}
                       alt={member.name}
                       className="aspect-[3/2] w-full rounded-t-lg object-cover brightness-90 dark:brightness-60"
                     />
@@ -64,14 +71,12 @@ export default function TeamPage() {
                   <div className="flex-1" />
                   <CardFooter className="flex flex-col gap-2">
                     <Link
-                      href={`/team/${member.id}`}
+                      href={`/team/${member._id.toString()}`}
                       className="inline-flex w-full shrink-0 items-center justify-center rounded-lg bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-all h-8 gap-1.5 hover:bg-primary/80"
                     >
                       Modify
                     </Link>
-                    <Button className="w-full" variant="destructive">
-                      Delete
-                    </Button>
+                    <DeleteButton id={member._id.toString()} endpoint="/api/team" itemName="team member" />
                   </CardFooter>
                 </Card>
               ))}

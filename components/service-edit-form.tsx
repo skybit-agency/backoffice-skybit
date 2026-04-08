@@ -13,6 +13,7 @@ import {
   FieldDescription,
 } from "@/components/ui/field";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface ServiceData {
   id: string;
@@ -33,6 +34,8 @@ export function ServiceEditForm({ service }: { service: ServiceData }) {
   const [fileName, setFileName] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [file, setFile] = useState<File | null>(null);
+
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -44,10 +47,11 @@ export function ServiceEditForm({ service }: { service: ServiceData }) {
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      const objectUrl = URL.createObjectURL(file);
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+      const objectUrl = URL.createObjectURL(selectedFile);
       setPreviewUrl(objectUrl);
       setFormData((prev) => ({ ...prev, ImageUrl: objectUrl }));
     }
@@ -62,17 +66,46 @@ export function ServiceEditForm({ service }: { service: ServiceData }) {
         ImageUrl: prev.ImageUrl.startsWith("blob:") ? service.ImageUrl : prev.ImageUrl,
       }));
       setFileName("");
+      setFile(null);
     }
   }
 
-  function handleSave() {
+  async function handleSave() {
     setIsSaving(true);
-    setTimeout(() => {
-      alert(
-        `Service "${formData.title}" saved successfully!\n\n${JSON.stringify(formData, null, 2)}`
-      );
+    const finalData = { ...formData };
+
+    try {
+      if (imageMode === "upload" && file) {
+        toast.info("Uploading image to Cloudinary...");
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        const res = await fetch("/api/upload", { method: "POST", body: uploadData });
+        if (!res.ok) throw new Error("Failed to upload image");
+
+        const data = await res.json();
+        finalData.ImageUrl = data.secure_url;
+      }
+
+      toast.info("Saving service details...");
+      const res = await fetch("/api/services", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalData),
+      });
+
+      if (!res.ok) throw new Error("Failed to save service");
+
+      toast.success("Service saved successfully!");
+      router.push("/services");
+      router.refresh();
+
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message || "An error occurred while saving.");
+    } finally {
       setIsSaving(false);
-    }, 600);
+    }
   }
 
   return (

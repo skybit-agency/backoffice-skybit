@@ -13,6 +13,7 @@ import {
   FieldDescription as FieldDesc,
 } from "@/components/ui/field";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 import type { TeamMember } from "@/app/Types";
 
 type ImageMode = "url" | "upload";
@@ -26,6 +27,8 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [file, setFile] = useState<File | null>(null);
+
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -35,10 +38,11 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      const objectUrl = URL.createObjectURL(file);
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+      const objectUrl = URL.createObjectURL(selectedFile);
       setPreviewUrl(objectUrl);
       setFormData((prev) => ({ ...prev, imageUrl: objectUrl }));
     }
@@ -55,15 +59,46 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
         imageUrl: prev.imageUrl.startsWith("blob:") ? member.imageUrl : prev.imageUrl,
       }));
       setFileName("");
+      setFile(null);
     }
   }
 
-  function handleSave() {
+  async function handleSave() {
     setIsSaving(true);
-    setTimeout(() => {
-      alert(`Team member "${formData.name}" saved successfully!`);
+    const finalData = { ...formData };
+
+    try {
+      if (imageMode === "upload" && file) {
+        toast.info("Uploading profile image tracking. to Cloudinary...");
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        const res = await fetch("/api/upload", { method: "POST", body: uploadData });
+        if (!res.ok) throw new Error("Failed to upload image");
+
+        const data = await res.json();
+        finalData.imageUrl = data.secure_url;
+      }
+
+      toast.info("Saving team member details...");
+      const res = await fetch("/api/team", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalData),
+      });
+
+      if (!res.ok) throw new Error("Failed to save team member");
+
+      toast.success("Team member saved successfully!");
+      router.push("/team");
+      router.refresh();
+
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message || "An error occurred while saving.");
+    } finally {
       setIsSaving(false);
-    }, 600);
+    }
   }
 
   return (

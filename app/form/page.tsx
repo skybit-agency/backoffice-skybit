@@ -2,10 +2,15 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { FormSubmissionsTable } from "@/components/form-submissions-table";
+import { Database } from "@/config/db";
+import { getSessionUser } from "@/lib/session";
 
-import data from "./data.json";
-
-export default function FormPage() {
+export default async function FormPage() {
+  const user = await getSessionUser();
+  const db = Database.getInstance().getClient();
+  await db.connect();
+  const collection = db.db('skybit').collection('forms');
+  const forms = await collection.find({}).sort({ date: -1 }).toArray();
   return (
     <SidebarProvider
       style={
@@ -15,7 +20,7 @@ export default function FormPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset" user={user} />
 
       <SidebarInset>
         <SiteHeader />
@@ -29,10 +34,10 @@ export default function FormPage() {
                 </p>
               </div>
               <span className="rounded-lg bg-muted px-3 py-1 text-sm font-medium text-muted-foreground">
-                {data.length} submissions
+                {forms.length} submissions
               </span>
             </div>
-            <FormSubmissionsTable initialData={data} />
+            <FormSubmissionsTable initialData={forms} />
           </div>
         </div>
       </SidebarInset>
