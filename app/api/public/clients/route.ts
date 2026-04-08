@@ -10,6 +10,13 @@ const allowlist = (process.env.NEXT_PUBLIC_CORS_ALLOWLIST || "")
   .filter(Boolean);
 
 function getCorsHeaders(origin: string | null): Record<string, string> | null {
+  if (allowlist.length === 0) {
+    return {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+  }
   if (!origin) {
     return {
       'Access-Control-Allow-Origin': '*',
