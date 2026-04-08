@@ -8,16 +8,16 @@ export async function GET() {
     await db.connect();
     const collection = db.db('skybit').collection('team');
     
-    const team = await collection.find({}).toArray();
+    const team = await collection.find({}).toArray() as (TeamMemberDB & { _id: { toString(): string } })[];
     
-    const formatted = team.map((member: any) => ({
+    const formatted = team.map((member) => ({
       ...member,
       _id: member._id.toString(),
       id: member._id.toString()
     }));
 
     return NextResponse.json(formatted, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: 'Failed to fetch team members' }, { status: 500 });
   }
 }
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       message: 'Team member created successfully',
       member: { ...newMember, _id: result.insertedId.toString(), id: result.insertedId.toString() }
     }, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: 'Failed to create team member' }, { status: 500 });
   }
 }

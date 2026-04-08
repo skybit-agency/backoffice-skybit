@@ -30,7 +30,7 @@ export function FormSubmissionsTable({
 
   return (
     <div className="space-y-3">
-      {initialData.map((sub: any) => {
+      {initialData.map((sub) => {
         const idToUse = sub._id?.toString() || sub.id;
         return (
           <Card key={idToUse}>

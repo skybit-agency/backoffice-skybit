@@ -93,9 +93,10 @@ export function TeamEditForm({ member }: { member: TeamMember }) {
       router.push("/team");
       router.refresh();
 
-    } catch (error: any) {
-      console.error(error);
-      toast.error(error.message || "An error occurred while saving.");
+    } catch (error) {
+      const err = error as Error;
+      console.error(err);
+      toast.error(err.message || "An error occurred while saving.");
     } finally {
       setIsSaving(false);
     }

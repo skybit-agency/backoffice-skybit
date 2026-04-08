@@ -32,8 +32,9 @@ export function DeleteButton({ id, endpoint, itemName = "item", className }: Del
       toast.success(`${itemName} deleted successfully!`);
       // Refresh the current page to pull the latest DB state without the deleted item
       router.refresh();
-    } catch (error: any) {
-      console.error(error);
+    } catch (error) {
+      const err = error as Error;
+      console.error(err);
       toast.error(`Could not delete ${itemName}.`);
     } finally {
       setIsDeleting(false);

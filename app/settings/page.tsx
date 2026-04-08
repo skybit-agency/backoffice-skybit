@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SettingsForm } from "@/components/settings-form";
 import { Database } from "@/config/db";
 import { getSessionUser } from "@/lib/session";
+import { SettingsUpdateDTO } from "../Types";
 
 export default async function SettingsPage() {
   const user = await getSessionUser();
@@ -44,7 +45,7 @@ export default async function SettingsPage() {
                 Manage social media links and website metadata.
               </p>
             </div>
-            <SettingsForm initialData={settingsData as any} />
+            <SettingsForm initialData={settingsData as SettingsUpdateDTO} />
           </div>
         </div>
       </SidebarInset>

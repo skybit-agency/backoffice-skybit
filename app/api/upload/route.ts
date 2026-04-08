@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       readableStream.pipe(uploadStream);
     });
 
-    const result: any = await uploadPromise;
+    const result = await uploadPromise as { secure_url: string; public_id: string; format?: string };
 
     return NextResponse.json({ 
       secure_url: result.secure_url, 
@@ -61,8 +61,9 @@ export async function POST(req: Request) {
       format: result.format || 'raw'
     }, { status: 200 });
 
-  } catch (error: any) {
-    console.error('Cloudinary upload error:', error);
-    return NextResponse.json({ error: error.message || 'File upload failed' }, { status: 500 });
+  } catch (error) {
+    const err = error as Error;
+    console.error('Cloudinary upload error:', err);
+    return NextResponse.json({ error: err.message || 'File upload failed' }, { status: 500 });
   }
 }

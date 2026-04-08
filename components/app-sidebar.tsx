@@ -2,10 +2,10 @@
 
 import * as React from "react"
 
-import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
+import Link from "next/link"
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { DashboardSquare01Icon, Menu01Icon, ChartHistogramIcon, Folder01Icon, UserGroupIcon, Camera01Icon, File01Icon, Settings05Icon, HelpCircleIcon, SearchIcon, Database01Icon, Analytics01Icon, CommandIcon, Profile02Icon } from "@hugeicons/core-free-icons"
+import { DashboardSquare01Icon, Menu01Icon, UserGroupIcon, File01Icon, Settings05Icon, HelpCircleIcon, CommandIcon, Profile02Icon } from "@hugeicons/core-free-icons"
 
 const data = {
   user: {
@@ -95,10 +95,12 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton
               className="data-[slot=sidebar-menu-button]:p-1.5!"
-              render={<a href="/" />}
+              asChild
             >
-              <HugeiconsIcon icon={CommandIcon} strokeWidth={2} className="size-5!" />
-              <span className="text-base font-semibold">SkyBit Agency.</span>
+              <Link href="/">
+                <HugeiconsIcon icon={CommandIcon} strokeWidth={2} className="size-5!" />
+                <span className="text-base font-semibold">SkyBit Agency.</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

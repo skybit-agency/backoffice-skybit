@@ -8,10 +8,10 @@ export async function GET() {
     await db.connect();
     const collection = db.db('skybit').collection('services');
     
-    const services = await collection.find({}).toArray();
+    const services = await collection.find({}).toArray() as (ServiceDB & { _id: { toString(): string } })[];
     
     // Convert _id to string for the client
-    const formattedServices = services.map((s: any) => ({
+    const formattedServices = services.map((s) => ({
       ...s,
       _id: s._id.toString(),
       id: s._id.toString() // for frontend compatibility
