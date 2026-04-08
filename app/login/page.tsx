@@ -2,6 +2,7 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { toast } from "sonner"
 
 import { LoginForm } from "@/components/login-form"
@@ -37,7 +38,7 @@ export default function LoginPage() {
          setError(data.message || "Invalid credentials");
          toast.error(data.message || "Invalid credentials");
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred while logging in.");
       toast.error("Network or server error.");
     } finally {
@@ -66,10 +67,13 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
+        <Image
           src="/logo.png"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          alt="Skybit admin background"
+          fill
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover dark:brightness-[0.2] dark:grayscale"
+          priority
         />
       </div>
     </div>

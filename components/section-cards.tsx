@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ChartUpIcon, ChartDownIcon } from "@hugeicons/core-free-icons"
+import { ChartUpIcon } from "@hugeicons/core-free-icons"
 
 export function SectionCards({ stats }: { stats?: { clients: number, services: number, team: number, submissions: number } }) {
   return (
